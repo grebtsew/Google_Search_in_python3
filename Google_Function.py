@@ -9,10 +9,8 @@ If path is None, won't save on drive
 
 Return reference list to images
 '''
-
 def download(urls, path= None):
     pass
-
 
 '''
 DISTANCE
