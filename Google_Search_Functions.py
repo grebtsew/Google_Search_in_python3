@@ -1,16 +1,5 @@
 import googlesearch # pip install google
-
-'''
-DOWNLOAD
-
-Download object, pdf or image
-Takes a set of urls and tries to download them to path
-If path is None, won't save on drive
-
-Return reference list to images
-'''
-def download(urls, path= None):
-    pass
+from google_images_download import google_images_download   #importing the library
 
 '''
 DISTANCE
@@ -29,7 +18,6 @@ Get a random user agent string.
 
 Return string
 '''
-
 def get_user_agent():
  return googlesearch.get_random_user_agent()[source]
 
@@ -40,35 +28,19 @@ This function return the amount of hits on search query
 
 Return int
 '''
-
-def get_hits(query, tld='com', lang='en', tbs='0', safe='off', domains=None, extra_params={}, tpe='', user_agent=None):
+def get_hits(query, tld='com', lang='sv', tbs='0', safe='off', domains=None, extra_params={}, tpe='', user_agent=None):
     return googlesearch.hits(query, tld, lang, tbs, safe, domains, extra_params, tpe, user_agent)
 
 '''
 SEARCH
 
 This is a simplified search function implementation.
-I added some parameters to make it more generic towards google import.
+I added some parameters to make it more generic towards google and google_search_image import.
+I have not experimented with all different parameters.
+Code assume from examples on the imported libraries github repos.
 
-'''
+ARGUMENTS:
 
-def search(query, tld='com',
-    lang='en',
-    tbs='0',
-    safe='off',
-    num=10,
-    start=0,
-    stop=5,
-    domains=None,
-    pause=2.0,
-    only_standard=False,
-    extra_params={},
-    tpe='',
-    user_agent=None,
-    type = 'none'):
-
-    '''
-    google search
     query (str) – Query string. Must NOT be url-encoded.
     tld (str) – Top level domain.
     lang (str) – Language.
@@ -84,7 +56,32 @@ def search(query, tld='com',
     tpe (str) – Search type (images, videos, news, shopping, books, apps) Use the following values {videos: ‘vid’, images: ‘isch’, news: ‘nws’, shopping: ‘shop’, books: ‘bks’, applications: ‘app’}
     or None user_agent (str) – User agent for the HTTP requests. Use None for the default.
     type - Changes which function to use.
-    '''
+
+    ----- For images only -----
+    path -  if download is active, path will discribe output directory
+    rights - (str) - Values labeled-for-reuse-with-modifications,labeled-for-reuse, labeled-for-noncommercial-reuse-with-modification,labeled-for-nocommercial-reuse
+    download - Download html, pdf or image,    Takes a set of urls and tries to download them to path, If path is None, won't save on drive, Return reference list to images, Path file to save to
+'''
+def search(query,
+    tld='com',
+    lang='en',
+    tbs='0',
+    safe='off',
+    num=10,
+    start=0,
+    stop=5,
+    domains=None,
+    pause=2.0,
+    only_standard=False,
+    extra_params={},
+    tpe='',
+    user_agent=None,
+    type = 'none',
+    rights = '',
+    download = False,
+    path = None):
+
+
 
     if (type == 'text' or type == 'none' or type is None): # normal search
         return googlesearch.search(query,
@@ -109,7 +106,7 @@ def search(query, tld='com',
             Generator (iterator) that yields found URLs. If the stop parameter is None the iterator will loop forever.
         '''
 
-    elif (type == 'image') : # image search
+    elif (type == 'image_home') : # image search
 
         return googlesearch.search_images(query,
          tld,
@@ -131,6 +128,49 @@ def search(query, tld='com',
 
         Generator (iterator) that yields found URLs. If the stop parameter is None the iterator will loop forever.
         '''
+    elif(type == 'image' or type == 'images'):
+
+        response = google_images_download.googleimagesdownload()   #class instantiation
+
+        if lang == "sv":
+            language = "Swedish"
+        else:
+            language = "English"
+
+        arguments = {
+        "keywords":query,
+        "limit":num,
+        "print_urls":"false",
+        "language":language
+          }
+
+          # add rights
+        if rights in ["labeled-for-reuse-with-modifications",
+         "labeled-for-reuse",
+         "labeled-for-noncommercial-reuse-with-modification",
+         "labeled-for-nocommercial-reuse" ]:
+            arguments["usage_rights"] =  rights
+
+        # add safe
+        if safe == "true":
+            arguments["safe_search"] = safe
+
+        if download:
+            if path is not None:
+                arguments["output_directory"] = path
+
+        else:
+            arguments["no_download"] = "true"
+            arguments["no_directory"] = "true"
+
+        '''
+        This one is a little special,
+        Here we instead use google_images_download library
+        Used to download images directly!
+        '''
+
+        return   response.download(arguments) #passing the arguments to the function
+
 
     elif (type == 'video' or  type == 'film' or type == 'movie') : # video search
         return googlesearch.search_videos(query,
