@@ -1,5 +1,29 @@
 import googlesearch # pip install google
 from google_images_download import google_images_download   #importing the library
+import requests
+import bs4
+import os
+
+'''
+DOWNLOAD
+
+Download url as html file
+
+Returns path
+'''
+def Download(url_list, path, out_format):
+
+    for url in url_list:
+        r = requests.get(url)
+
+        html = bs4.BeautifulSoup(r.text, features="lxml")
+
+        if not os.path.exists(path +"/"):
+            os.makedirs(path +"/")
+
+        f = open(path +"/" + html.title.text.replace(" ", "_").replace("|","")+ '.' + out_format, 'wb')
+        f.write(r.text.encode('utf-8'))
+        f.close
 
 '''
 DISTANCE
@@ -69,7 +93,7 @@ def search(query,
     safe='off',
     num=10,
     start=0,
-    stop=5,
+    stop=1,
     domains=None,
     pause=2.0,
     only_standard=False,
@@ -79,26 +103,47 @@ def search(query,
     type = 'none',
     rights = '',
     download = False,
-    path = None):
+    path = None,
+    out_format = "html"):
 
 
 
     if (type == 'text' or type == 'none' or type is None): # normal search
-        return googlesearch.search(query,
-            tld,
-            lang,
-             tbs,
-             safe,
-             num,
-             start,
-             stop,
-             domains,
-             pause,
-             only_standard,
-             extra_params,
-             tpe,
-             user_agent)
-        '''
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download(googlesearch.search(query,
+                tld,
+                lang,
+                 tbs,
+                 safe,
+                 num,
+                 start,
+                 stop,
+                 domains,
+                 pause,
+                 only_standard,
+                 extra_params,
+                 tpe,
+                 user_agent), p, out_format)
+
+        else:
+            return googlesearch.search(query,
+                tld,
+                lang,
+                 tbs,
+                 safe,
+                 num,
+                 start,
+                 stop,
+                 domains,
+                 pause,
+                 only_standard,
+                 extra_params,
+                 tpe,
+                 user_agent)
+            '''
             Return type:
 
             generator of str
@@ -107,19 +152,35 @@ def search(query,
         '''
 
     elif (type == 'image_home') : # image search
-
-        return googlesearch.search_images(query,
-         tld,
-         lang,
-         tbs,
-         safe,
-         num,
-         start,
-         stop,
-         pause,
-         domains,
-         only_standard,
-         extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download(googlesearch.search_images(query,
+             tld,
+             lang,
+             tbs,
+             safe,
+             num,
+             start,
+             stop,
+             pause,
+             domains,
+             only_standard,
+             extra_params), p, out_format)
+        else:
+            return googlesearch.search_images(query,
+             tld,
+             lang,
+             tbs,
+             safe,
+             num,
+             start,
+             stop,
+             pause,
+             domains,
+             only_standard,
+             extra_params)
         '''
         Return type:
 
@@ -173,18 +234,36 @@ def search(query,
 
 
     elif (type == 'video' or  type == 'film' or type == 'movie') : # video search
-        return googlesearch.search_videos(query,
-         tld,
-         lang,
-         tbs,
-         safe,
-         num,
-         start,
-         stop,
-         domains,
-         pause,
-         only_standard,
-         extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download(googlesearch.search_videos(query,
+             tld,
+             lang,
+             tbs,
+             safe,
+             num,
+             start,
+             stop,
+             pause,
+             domains,
+             only_standard,
+             extra_params), p, out_format)
+        else:
+
+            return googlesearch.search_videos(query,
+             tld,
+             lang,
+             tbs,
+             safe,
+             num,
+             start,
+             stop,
+             domains,
+             pause,
+             only_standard,
+             extra_params)
 
         '''
         Return type:
@@ -196,7 +275,13 @@ def search(query,
         '''
 
     elif (type == 'news') : # search news
-        return googlesearch.search_news(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download(googlesearch.search_news(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params), p, out_format)
+        else:
+            return googlesearch.search_news(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
 
         '''
         Return type:
@@ -207,7 +292,13 @@ def search(query,
         Generator (iterator) that yields found URLs. If the stop parameter is None the iterator will loop forever.
         '''
     elif (type == 'lucky') : # i am luchy search
-        return googlesearch.lucky(query, tld, lang, tbs, safe, only_standard, extra_params, tpe)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download( googlesearch.lucky(query, tld, lang, tbs, safe, only_standard, extra_params, tpe), p, out_format)
+        else:
+            return googlesearch.lucky(query, tld, lang, tbs, safe, only_standard, extra_params, tpe)
 
         '''
         Return type:
@@ -218,7 +309,14 @@ def search(query,
         URL found by Google.
         '''
     elif (type == 'shop') : #
-        return googlesearch.search_shop(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download( googlesearch.search_shop(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params), p, out_format)
+        else:
+
+            return googlesearch.search_shop(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
 
         '''
         Return type:
@@ -229,7 +327,14 @@ def search(query,
         Generator (iterator) that yields found URLs. If the stop parameter is None the iterator will loop forever.
         '''
     elif (type == 'app' or type == 'apps') : # search apps
-        return googlesearch.search_apps(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download( googlesearch.search_apps(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params), p, out_format)
+        else:
+
+            return googlesearch.search_apps(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
         '''
         Return type:
 
@@ -239,7 +344,13 @@ def search(query,
         Generator (iterator) that yields found URLs. If the stop parameter is None the iterator will loop forever.
         '''
     elif (type == 'books' or type == 'book') : # book search
-        return googlesearch.search_books(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
+        if download:
+            p = "downloads"
+            if path is not None:
+                p = path
+            return Download( googlesearch.search_books(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params), p, out_format)
+        else:
+            return googlesearch.search_books(query, tld, lang, tbs, safe, num, start, stop, domains, pause, only_standard, extra_params)
         '''
         Return type:
 

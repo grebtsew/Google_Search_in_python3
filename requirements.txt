@@ -1,0 +1,4 @@
+google
+google_images_download
+requests
+bs4
