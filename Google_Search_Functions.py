@@ -13,6 +13,8 @@ Returns path
 '''
 def Download(url_list, path, out_format):
 
+    list = []
+
     for url in url_list:
         r = requests.get(url)
 
@@ -21,9 +23,16 @@ def Download(url_list, path, out_format):
         if not os.path.exists(path +"/"):
             os.makedirs(path +"/")
 
-        f = open(path +"/" + html.title.text.replace(" ", "_").replace("|","")+ '.' + out_format, 'wb')
+
+        file_path = path +"/" + html.title.text.replace(" ", "_").replace("|","")+ '.' + out_format
+
+        list.add(file_path)
+        f = open(file_path, 'wb')
         f.write(r.text.encode('utf-8'))
         f.close
+
+
+    return list
 
 '''
 DISTANCE

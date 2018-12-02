@@ -1,13 +1,15 @@
 # Google_Search_in_python3
 There are several different google search library for python out there.
-This repo uses some of them to create a more generic search function.
+In this repo I use some of them to create a more easy to use and generic search function and download ability.
 
 # Purpose
-The reason I want to be able to preform searches through a search engine is to create datasets for machine learning.
-Both textual and images. I will probably be reusing some code from this repo in future development.
+The reason I want to be able to preform searches through a search engine is to create large datasets for machine learning.
+Mainly I created this repo to make the google search calls easier to use, by setting alot of the default parameters.
+Both textual and images. I will probably reuse some code from this repo in future development.
 If no intrest is shown to this repo it will probably be removed from github eventually, to merge it with a larger project.
 
 # How to use
+Copy the "Google_Search_Functions.py" file into your project.
 Try running the test.py file.
 This file contains the following code:
 ```
@@ -15,7 +17,7 @@ import Google_Search_Functions as google
 
 google.search("Cute Kittens", type = "image", download = True, num = 10);
 ```
-This program will download 10 images of "Cute Kittens" from google search.
+This program will download 10 images of "Cute Kittens" from google search into a folder callded "downloads".
 See default values in Google_Search_Functions, there you can see several other intresting parameters.
 
 # More Code Examples
@@ -38,14 +40,14 @@ response = google.search("Cute Kittens", type = "image", Safe = "true", path = '
 
 # About
 This implementation lets you download or get urls to websites for google searches.
-Depending on parameters you might get different return values.
-If you download, output paths will be returned else the urls will be returned.
-In this implementation I use and depend on other libraries to save time.
-An alternative would be to scrape alot from google, then I would be able to do this implementation a little cleaner.
+Depending on parameters you might get different return values. Check them out in the "Google_Search_Functions" file.
+The reason I use and depend on other libraries are to save time.
+However it is possible that I will recreate this repo in the future and then instead write from scratch to make a more clean solution.
+The solution would include alot of scrapeing from google.
 In the library google-images-download some html scrape is used.
 See link below and check out the code if you plan to instead scrape and make your own implementation.
 My thoughts in the matter right now is, why reinvent the wheel?
-This implementation is good enought.
+This implementation is good enough.
 
 # Further development
 In the future it might be intresting to use other search engines such as bing, DuckDuckGo, Wiki.com, Twitter, CC Search, Gibiru, StartPage.
