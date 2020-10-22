@@ -16,21 +16,23 @@ def Download(url_list, path, out_format):
     list = []
 
     for url in url_list:
-        r = requests.get(url)
+        try:
+            r = requests.get(url)
 
-        html = bs4.BeautifulSoup(r.text, features="lxml")
+            html = bs4.BeautifulSoup(r.text, features="lxml")
 
-        if not os.path.exists(path +"/"):
-            os.makedirs(path +"/")
+            if not os.path.exists(path +"/"):
+                os.makedirs(path +"/")
 
 
-        file_path = path +"/" + html.title.text.replace(" ", "_").replace("|","")+ '.' + out_format
+            file_path = path +"/" + html.title.text.replace(" ", "_").replace("|","")+ '.' + out_format
 
-        list.add(file_path)
-        f = open(file_path, 'wb')
-        f.write(r.text.encode('utf-8'))
-        f.close
-
+            list.add(file_path)
+            f = open(file_path, 'wb')
+            f.write(r.text.encode('utf-8'))
+            f.close
+        except Exception as e:
+            print(str(e))
 
     return list
 
@@ -94,6 +96,8 @@ ARGUMENTS:
     path -  if download is active, path will discribe output directory
     rights - (str) - Values labeled-for-reuse-with-modifications,labeled-for-reuse, labeled-for-noncommercial-reuse-with-modification,labeled-for-nocommercial-reuse
     download - Download html, pdf or image,    Takes a set of urls and tries to download them to path, If path is None, won't save on drive, Return reference list to images, Path file to save to
+
+    # Read more here: https://python-googlesearch.readthedocs.io/en/latest/
 '''
 def search(query,
     tld='com',
@@ -146,12 +150,15 @@ def search(query,
                  num,
                  start,
                  stop,
-                 domains,
                  pause,
-                 only_standard,
-                 extra_params,
-                 tpe,
-                 user_agent)
+                 domains, # country
+                 
+                 #only_standard,
+                 extra_params, 
+                 #tpe,
+                 user_agent
+                 #ssl
+                 )
             '''
             Return type:
 

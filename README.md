@@ -2,6 +2,10 @@
 There are several different google search library for python out there.
 In this repo I use some of them to create a more easy to use and generic search function and download ability.
 
+![license](https://img.shields.io/github/license/grebtsew/Google_Search_in_python3)
+![size](https://img.shields.io/github/repo-size/grebtsew/Google_Search_in_python3)
+![commit](https://img.shields.io/github/last-commit/grebtsew/Google_Search_in_python3)
+
 # Purpose
 The reason I want to be able to preform searches through a search engine is to create large datasets for machine learning.
 Mainly I created this repo to make the google search calls easier to use, by setting alot of the default parameters.
@@ -75,6 +79,9 @@ https://github.com/hardikvasa/google-images-download
 
 * googlesearch library
 https://python-googlesearch.readthedocs.io/en/latest/
+
+# Issues
+If you find any issues with this solution please leave an issue-ticket on the repository.
 
 # Disclaimer
 These functions lets you download tons of data from Google. Please do not download or use any data that violates its copyright terms. Google is a search engine that merely indexes data and allows you to find them. It does NOT produce its own data and, as such, it doesn't own copyright on any of them. The original creators of the data own the copyrights. Read Google TOS before using google search functions.

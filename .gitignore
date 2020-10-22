@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+.google-cookie
+
 # Distribution / packaging
 .Python
 build/
