@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  google-test:
+    build: .
+    volumes:
+      - ./downloads:/code/downloads
+      
+    

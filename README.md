@@ -2,15 +2,16 @@
 There are several different google search library for python out there.
 In this repo I use some of them to create a more easy to use and generic search function and download ability.
 
-![license](https://img.shields.io/github/license/grebtsew/Google_Search_in_python3)
 ![size](https://img.shields.io/github/repo-size/grebtsew/Google_Search_in_python3)
 ![commit](https://img.shields.io/github/last-commit/grebtsew/Google_Search_in_python3)
+
+As google enhance it's search engine there will be permanent changes needed for scraping tool such as this one. It is therefore important to inform the developer if implementation does not work. Please let me know if you encounter problems with the implementation and I will hopefully be able to help.
 
 # Purpose
 The reason I want to be able to preform searches through a search engine is to create large datasets for machine learning.
 Mainly I created this repo to make the google search calls easier to use, by setting alot of the default parameters.
 Both textual and images. I will probably reuse some code from this repo in future development.
-If no intrest is shown to this repo it will probably be removed from github eventually, to merge it with a larger project.
+If no interest is shown to this repo it will probably be removed from github eventually, to merge it with a larger project.
 
 # How to use
 Copy the "Google_Search_Functions.py" file into your project.
@@ -21,8 +22,8 @@ import Google_Search_Functions as google
 
 google.search("Cute Kittens", type = "image", download = True, num = 10);
 ```
-This program will download 10 images of "Cute Kittens" from google search into a folder callded "downloads".
-See default values in Google_Search_Functions, there you can see several other intresting parameters.
+This program will download 10 images of "Cute Kittens" from google search into a folder called "downloads".
+See default values in Google_Search_Functions, there you can see several other interesting parameters.
 
 # More Code Examples
 Search 10 websites:
@@ -42,19 +43,28 @@ Search and download 10 images with rights and output path:
 response = google.search("Cute Kittens", type = "image", Safe = "true", path = 'path', download = True, rights ="labeled-for-nocommercial-reuse" );
 ```
 
+# Run on docker
+I have now added a docker container for running the implementation without an unnecessary installation process.
+Try it out by installing docker and run:
+```
+docker-compose up
+```
+Edit the `test.py` file.
+
+
 # About
 This implementation lets you download or get urls to websites for google searches.
-Depending on parameters you might get different return values. Check them out in the "Google_Search_Functions" file.
+Depending on parameters you might get different return values. Check them out in the `Google_Search_Functions` file.
 The reason I use and depend on other libraries are to save time.
 However it is possible that I will recreate this repo in the future and then instead write from scratch to make a more clean solution.
-The solution would include alot of scrapeing from google.
+The solution would include a lot of scraping from google.
 In the library google-images-download some html scrape is used.
 See link below and check out the code if you plan to instead scrape and make your own implementation.
 My thoughts in the matter right now is, why reinvent the wheel?
 This implementation is good enough.
 
 # Further development
-In the future it might be intresting to use other search engines such as bing, DuckDuckGo, Wiki.com, Twitter, CC Search, Gibiru, StartPage.
+In the future it might be interesting to use other search engines such as bing, DuckDuckGo, Wiki.com, Twitter, CC Search, Gibiru, StartPage.
 I might choose to create my entire own implementation in the future if I for some reason don't like this solution.
 
 # Screenshots
